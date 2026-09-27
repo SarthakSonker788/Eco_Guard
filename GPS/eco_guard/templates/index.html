@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Guard | Satellite Deforestation Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-satellite"></i>
+            <span>Eco Guard</span>
+        </div>
+        <div class="status-indicator">
+            <span class="pulse"></span> Satellite Online
+        </div>
+    </nav>
+
+    <main class="container">
+        <header>
+            <h1>Deforestation & Impact Tracker</h1>
+            <p>Monitor forest health, detect tree loss, and analyze environmental impacts in real-time based on simulated satellite data.</p>
+        </header>
+
+        <div class="dashboard">
+            <!-- Input Section -->
+            <section class="glass-panel input-section">
+                <h2><i class="fa-solid fa-satellite-dish"></i> Target Satellite Scan</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+                    Enter a location or GPS coordinates. The satellite will scan the region to automatically gather forest telemetry data.
+                </p>
+                <form id="simulator-form">
+                    <div class="input-group">
+                        <label for="location">Geographical Location</label>
+                        <input type="text" id="location" name="location" value="Amazon Rainforest, Brazil" placeholder="e.g. Bandipur National Park" required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                        <div class="input-group">
+                            <label for="latitude">Latitude</label>
+                            <input type="number" id="latitude" name="latitude" step="any" placeholder="Optional">
+                        </div>
+                        <div class="input-group">
+                            <label for="longitude">Longitude</label>
+                            <input type="number" id="longitude" name="longitude" step="any" placeholder="Optional">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <span>Initiate Satellite Scan</span>
+                        <i class="fa-solid fa-satellite"></i>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section">
+                
+                <div id="scan-results-info" class="scan-info glass-panel" style="margin-bottom: 0.5rem; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.95rem; color: var(--text-secondary);">
+                    <span><i class="fa-solid fa-tree" style="color: var(--accent-primary);"></i> Total Trees Detected: <strong id="val-total-trees" style="color: var(--text-primary); font-size: 1.1rem;">-</strong></span>
+                    <span><i class="fa-solid fa-arrow-trend-down" style="color: var(--danger);"></i> Trees Lost: <strong id="val-trees-lost" style="color: var(--text-primary); font-size: 1.1rem;">-</strong></span>
+                    <span><i class="fa-solid fa-ruler" style="color: var(--warning);"></i> Permitted Limit: <strong id="val-permitted-limit" style="color: var(--text-primary); font-size: 1.1rem;">-</strong></span>
+                </div>
+
+                <div id="alert-box" class="alert-box hidden">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <div class="alert-content">
+                        <h3>ALERT: Limit Exceeded!</h3>
+                        <p>Immediate notification dispatched to the Forest Department.</p>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card glass-panel">
+                        <div class="metric-icon"><i class="fa-solid fa-tree"></i></div>
+                        <div class="metric-info">
+                            <span class="metric-label">Trees Remaining</span>
+                            <span class="metric-value" id="val-trees-remaining">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card glass-panel">
+                        <div class="metric-icon warning"><i class="fa-solid fa-chart-pie"></i></div>
+                        <div class="metric-info">
+                            <span class="metric-label">Tree Loss %</span>
+                            <span class="metric-value" id="val-tree-loss-percentage">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card glass-panel">
+                        <div class="metric-icon danger"><i class="fa-solid fa-map"></i></div>
+                        <div class="metric-info">
+                            <span class="metric-label">Forest Area Lost</span>
+                            <span class="metric-value" id="val-forest-area-lost">-</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card glass-panel">
+                        <div class="metric-icon success"><i class="fa-solid fa-seedling"></i></div>
+                        <div class="metric-info">
+                            <span class="metric-label">Replanting Needed</span>
+                            <span class="metric-value" id="val-replanting-needed">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Environmental Impact Analysis</h3>
+                
+                <div class="impact-grid">
+                    <div class="impact-card glass-panel">
+                        <div class="impact-header">
+                            <i class="fa-solid fa-earth-americas"></i>
+                            <h4>Overall Impact</h4>
+                        </div>
+                        <div class="impact-value" id="val-env-impact">-</div>
+                    </div>
+                    
+                    <div class="impact-card glass-panel">
+                        <div class="impact-header">
+                            <i class="fa-solid fa-wind"></i>
+                            <h4>Air Quality</h4>
+                        </div>
+                        <div class="impact-value" id="val-air-quality">-</div>
+                    </div>
+
+                    <div class="impact-card glass-panel">
+                        <div class="impact-header">
+                            <i class="fa-solid fa-fire-flame-curved"></i>
+                            <h4>Fire Risk</h4>
+                        </div>
+                        <div class="impact-value" id="val-fire-risk">-</div>
+                    </div>
+
+                    <div class="impact-card glass-panel">
+                        <div class="impact-header">
+                            <i class="fa-solid fa-paw"></i>
+                            <h4>Wildlife Impacted</h4>
+                        </div>
+                        <div class="impact-value" id="val-wildlife-impact">-</div>
+                    </div>
+
+                    <div class="impact-card glass-panel">
+                        <div class="impact-header">
+                            <i class="fa-solid fa-temperature-arrow-up"></i>
+                            <h4>Est. Temp Change</h4>
+                        </div>
+                        <div class="impact-value" id="val-temp-change">-</div>
+                    </div>
+                    
+                    <div class="impact-card glass-panel">
+                        <div class="impact-header">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                            <h4>Limit Status</h4>
+                        </div>
+                        <div class="impact-value" id="val-limit-status">-</div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

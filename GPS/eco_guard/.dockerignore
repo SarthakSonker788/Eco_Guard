@@ -1,0 +1,32 @@
+# Git & Ignore
+.git
+.gitignore
+
+# Environment & Secrets
+.env
+.env.*
+*.env
+*.pem
+*.key
+secrets.json
+credentials.json
+
+# Python
+venv/
+env/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Tests & Logs
+.pytest_cache/
+*.log
+logs/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
